@@ -1,11 +1,13 @@
 import openai
-
+from dotenv import dotenv_values
 
 class AI:
     def __init__(self, **kwargs):
         self.kwargs = kwargs
 
         try:
+            config = dotenv_values(".env")
+            openai.api_key = config['OPENAI_API_KEY']
             openai.Model.retrieve("gpt-4")
         except openai.error.InvalidRequestError:
             print("Model gpt-4 not available for provided api key reverting "
